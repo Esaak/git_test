@@ -39,20 +39,27 @@ try:
     time_begin = time.time()
     while  adc()< 252:
         schet+=1 
-        list_Time.append =(time.time()-time_begin)
-        list_Napr.append =(adc())
+        list_Time.append (time.time()-time_begin)
+        list_Napr.append (adc())
         Voltage = adc()*3.3/256
         list_Voltage.append(Voltage)
         time.sleep(0.01)
+        print('1')
+        if(adc()>250):
+            break
     
     GPIO.output(troykaVoltage,0)
     while adc()>0:
         schet+=1
-        list_Time.append = (time.time()-time_begin)
-        list_Napr.append = (adc())
+        list_Time.append (time.time()-time_begin)
+        list_Napr.append (adc())
         Voltage = adc()*3.3/256
-        list_Voltage.append =(Voltage)
+        list_Voltage.append (Voltage)
         time.sleep(0.01)
+        print('0')
+        if(adc()<10):
+            break
+
     time_end = time.time()
     work_time = time_end-time_begin
     work_time_str = str(work_time)
@@ -71,7 +78,7 @@ try:
         settingfile.write("Period = ")
         settingfile.write(period_str+"\n")
         settingfile.write("Work time = ")
-        settingfile.write(work_time)
+        settingfile.write(work_time_str)
     settingfile.close()
 
     plt.plot(list_Time, list_Voltage, 'r-')
